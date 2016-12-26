@@ -42,6 +42,11 @@ const common = {
       {
         test: /bootstrap.+\.(jsx|js)$/,
         loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader'
       }
     ]
   },
@@ -100,3 +105,4 @@ module.exports = function(env) {
     })
   );
 };
+
