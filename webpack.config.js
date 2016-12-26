@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
@@ -49,6 +50,13 @@ const common = {
       title: 'bootstrap & jquery starter kit',
       inject: 'body',
       template: path.join( PATHS.app, 'index.tmpl.html' )
+    }),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery',
+      "window.jQuery": "jquery",
+      "window.Tether": 'tether'
     })
   ]
 };
@@ -69,8 +77,8 @@ module.exports = function(env) {
         entries: ['jquery', 'bootstrap']
       }),
       parts.minify(),
-      parts.extractCSS(PATHS.style),
-      parts.purifyCSS([PATHS.app])
+      parts.extractCSS(PATHS.style)
+      //parts.purifyCSS([PATHS.app])
     );
   }
 
