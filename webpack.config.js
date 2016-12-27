@@ -55,9 +55,6 @@ const common = {
       title: 'bootstrap & jquery starter kit',
       inject: 'body',
       template: path.join( PATHS.app, 'index.tmpl.html' )
-    }),
-    new webpack.ProvidePlugin({
-      "window.Tether": 'tether'
     })
   ]
 };
