@@ -10,8 +10,7 @@ const PATHS = {
   app: path.join(__dirname, 'src'),
   build: path.join(__dirname, 'public_html'),
   style: [
-    path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'css', 'bootstrap.min.css'),
-    path.join(__dirname, 'src', 'styles', 'main.css')
+    path.join(__dirname, 'src', 'index.css')
   ]
 };
 
@@ -33,6 +32,7 @@ const common = {
     path: PATHS.build,
     filename: '[name].js'
   },
+  context: __dirname,
   module: {
     loaders: [
       {
@@ -57,10 +57,6 @@ const common = {
       template: path.join( PATHS.app, 'index.tmpl.html' )
     }),
     new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-      $: 'jquery',
-      jquery: 'jquery',
-      "window.jQuery": "jquery",
       "window.Tether": 'tether'
     })
   ]
@@ -77,13 +73,10 @@ module.exports = function(env) {
         'process.env.NODE_ENV',
         'production'
       ),
-      parts.extractBundle({
-        name: 'vendor',
-        entries: ['jquery', 'bootstrap']
-      }),
-      parts.minify(),
-      parts.extractCSS(PATHS.style)
+      //parts.minify(),
+      parts.extractCSS(PATHS.style),
       //parts.purifyCSS([PATHS.app])
+      parts.copyStatic({ from: 'assets' })
     );
   }
 
@@ -99,10 +92,10 @@ module.exports = function(env) {
     //parts.clean(PATHS.build),
     parts.setupCSS(PATHS.style),
     parts.devServer({
+      contentBase: path.join( __dirname, 'assets' ),
       // Customize host/port here if needed
       host: process.env.HOST,
       port: process.env.PORT
     })
   );
 };
-

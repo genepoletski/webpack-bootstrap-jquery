@@ -1,0 +1,4 @@
+@import "./modules/call_request/module.css";
+@import "./modules/chat_customer_manager/module.css";
+@import "./modules/instant_messages/module.css";
+@import "./modules/manager_messages/module.css";

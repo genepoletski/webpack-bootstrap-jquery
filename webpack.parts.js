@@ -3,10 +3,12 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 exports.devServer = function(options) {
   return {
     devServer: {
+      contentBase: options.contentBase,
       watchOptions: {
         // Delay the rebuild after the first change
         aggregateTimeout: 300,
@@ -79,6 +81,8 @@ exports.minify = function() {
 
         // Eliminate comments
         comments: false,
+
+        debug: true,
 
         // Compression specific options
         compress: {
@@ -191,6 +195,16 @@ exports.purifyCSS = function(paths) {
         // picks up .js files by default!
         resolveExtensions: ['.html']
       })
+    ]
+  };
+};
+
+exports.copyStatic = function( opts ) {
+  return {
+    plugins: [
+      new CopyWebpackPlugin([
+        opts
+      ])
     ]
   };
 };
